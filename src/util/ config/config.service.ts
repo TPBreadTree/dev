@@ -2,12 +2,13 @@ import { Injectable } from "@nestjs/common";
 import yaml from 'js-yaml';
 import fs from 'fs';
 import * as _ from 'lodash';
+import DBConfig from "./settings/dbConfig";
 
 // YAML Setting logic -> OK? TESTING DOCKER && KUBER
 @Injectable()
 export class ConfigService {
     readonly env: string;
-    readonly db: string; //env MySQL Sturct Setting
+    readonly db: DBConfig; //env MySQL Sturct Setting
     readonly port: number // env Port Setting
 
     constructor() {
@@ -20,7 +21,7 @@ export class ConfigService {
             configMap = _.merge(configMap, config);
             }
         }
-        //this.db = new DBConfig(configMap.db) // Setting ADD
+        this.db = new DBConfig(configMap.db) // Setting ADD
         //this.port
     }
 }
